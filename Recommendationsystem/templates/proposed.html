@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detection Accuracies</title>
+</head>
+<body>
+    <h1>Detection Accuracies</h1>
+    <form method="post" action="{% url 'show_accuracies_graph' %}">
+        {% csrf_token %}
+        <button type="submit">Show Accuracies Graph</button>
+    </form>
+    {% if graph_base64 %}
+        <h2>Accuracy Comparison</h2>
+        <img src="data:image/png;base64,{{ graph_base64 }}" alt="Accuracies Graph">
+    {% endif %}
+</body>
+</html>

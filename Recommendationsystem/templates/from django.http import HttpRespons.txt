@@ -1,0 +1,316 @@
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
+from django.template import RequestContext
+import pymysql
+from datetime import date
+from django.core.mail import EmailMessage
+from django.template.loader import render_to_string
+from django.conf import settings
+import random
+
+con=pymysql.connect(host="localhost",user="root",password="root",database="mentalhealth")
+
+def index(request):
+    return render(request,"homepage.html")
+
+def about(request):
+    return render(request,"about.html")
+
+def service(request):
+    return render(request,"service.html")
+
+def admindashboard(request):
+     return render(request,"admindashboard.html")
+
+def questions(request):
+     return render(request,"inputquestions.html")
+
+def inputquestions(request):
+    inputquestions=request.POST.get("inputquestions")
+    
+    sql="INSERT INTO questions(que) VALUES (%s)";
+    values=(inputquestions,)
+    cur=con.cursor()
+    cur.execute(sql,values)
+    con.commit()
+    return render(request,"inputquestions.html")
+   
+
+    
+def dashboard(request):
+    return render(request,"admindashboard.html")
+
+    
+def login(request):
+    return render(request,"loginpanel.html")
+    
+def logout(request):
+    return render(request,"loginpanel.html")
+
+def register(request):
+    return render(request,"registrationPanel.html")
+
+def dologin(request):
+    sql="select * from userdata";
+    cur=con.cursor()
+    cur.execute(sql)
+    data=cur.fetchall()
+    email=request.POST.get('emai')
+    password=request.POST.get('passw')
+    name="";    
+    uid="";
+    isfound="0";
+    content={}
+    payload=[]
+    print(email)
+    print(password)
+    if(email=="admin" and password=="admin"):
+        print("print")
+        return render(request,"admindashboard.html")
+    else:
+        for x in data:
+            if(x[2]==email and x[3]==password):
+                request.session['uid']=x[4]
+                request.session['name']=x[0]
+                request.session['contact']=x[1]
+                request.session['email']=x[2]
+                request.session['pass']=x[3]
+                isfound="1"
+        if(isfound=="1"):
+             return render(request,"UserDashboard.html")
+        else:
+             return render(request,"error.html")
+
+
+def prevpred(request):
+    content={}
+    payload=[]
+    uid=request.session['uid']
+    q1="select * from answer where uid=%s";
+    values=(uid)
+    cur=con.cursor()
+    cur.execute(q1,values)
+    res=cur.fetchall()
+    for x in res:
+        content={'answers':x[0]}
+        payload.append(content)
+        print(payload)
+        content={}
+    return render(request,"prevpred.html",{'list': {'items':payload}})
+
+
+def doregister(request):
+    name=request.POST.get('uname')
+    cnumber=request.POST.get('cno')
+    email=request.POST.get('email')
+    password=request.POST.get('passw')
+    sql="INSERT INTO userdata(name,contact,email,password) VALUES (%s,%s,%s,%s)";
+    values=(name,cnumber,email,password)
+    cur=con.cursor()
+    cur.execute(sql,values)
+    con.commit()
+    return render(request,"loginpanel.html")
+
+
+
+def viewpredicadmin(request):
+    content={}
+    payload=[]
+    q1="select * from smp";
+    cur=con.cursor()
+    cur.execute(q1)
+    res=cur.fetchall()
+    for x in res:
+        content={'s1':x[0],"s2":x[1],"s3":x[2],"s4":x[3],'s5':x[4],"s6":x[5],"s7":x[6],"s8":x[7],"pred":x[8],"acc":x[9]}
+        payload.append(content)
+        content={}
+    return render(request,"viewpredadmin.html",{'list': {'items':payload}})
+
+
+def prevpred(request):
+    return render(request,"prevpred.html")
+
+def myprofile(request):
+    content={}
+    payload=[]
+    uid=request.session['uid']
+    q1="select * from userdata where uid=%s";
+    values=(uid)
+    cur=con.cursor()
+    cur.execute(q1,values)
+    res=cur.fetchall()
+    for x in res:
+        content={'name':x[0],"contact":x[1],"email":x[2]}
+        payload.append(content)
+        content={}
+    return render(request,"myprofile.html",{'list': {'items':payload}})
+
+
+def viewuser(request):
+    content={}
+    payload=[]
+    q1="select * from userdata";
+    cur=con.cursor()
+    cur.execute(q1)
+    res=cur.fetchall()
+    for x in res:
+        content={'name':x[0],"contact":x[1],"email":x[2]}
+        payload.append(content)
+        content={}
+    return render(request,"viewuserprofile.html",{'list': {'items':payload}})
+
+def UserDashboard(request):
+        return render(request,"UserDashboard.html")     
+
+def livepred(request):
+    return render(request,"predict.html")
+
+global count
+global lastchat
+count=0
+def chatbot(request):
+    lastchat=""
+    global count
+    q1 = "select * from questions ORDER BY uid"
+    cur = con.cursor()
+    cur.execute(q1)
+    res = cur.fetchall()
+    questions = [x[0] for x in res]
+    # Get the last answer from the database
+    uid=request.session['uid']
+    counts = int(request.POST.get('count', '0'))
+    context = {'questions': questions, 'count': count}
+    answer = request.POST.get('answer')
+
+
+    # Update the database with the latest answer
+    q3 = "INSERT INTO answer (answers,uid) VALUES (%s,%s)"
+    cur.execute(q3, (answer,str(uid)))
+    con.commit()
+    #index += 1
+    
+    if count < len(questions):
+        #print(index)
+        context['question'] = questions[count]
+##        context['index'] = index
+        context['count'] = count
+        #print(context['count'])
+        print(answer)
+        lastchat=answer
+    else:
+        cont = isstress(request)
+        print(cont['label'])
+        print(cont['subreddit'])
+        print(cont['clicked'])
+        print(cont['what_they_do'])
+        context['label'] = cont['label']
+        context['subreddit'] = cont['subreddit']
+        context['clicked'] = cont['clicked']
+        context['what_they_do'] = cont['what_they_do']
+        context['end'] = True
+
+    uid=1
+    q4 = "UPDATE lastanswer SET latest = %s WHERE uid = %s"
+    cur.execute(q4, (answer, uid))
+    con.commit()    
+    count +=1
+    print(count)
+        
+        
+    return render(request, 'chatbot.html', context)
+
+def chat(request):
+    return render(request,"chatbot.html")
+
+
+def isstress(request):
+    import pandas as pd
+    from sklearn.tree import DecisionTreeClassifier
+    from sklearn.linear_model import LinearRegression
+    import numpy as np
+    data = pd.read_csv("C:\\Users\\ASUS\\Downloads\\stress.csv")
+    #print(data.head())
+    data.isnull().sum()
+    clicked = False
+    payload={}
+    import nltk
+    import re
+    nltk.download('stopwords')
+    stemmer = nltk.SnowballStemmer("english")
+    from nltk.corpus import stopwords
+    import string
+    stopword=set(stopwords.words('english'))
+    def clean(text):
+        text = str(text).lower()
+        text = re.sub('\[.*?\]', '', text)
+        text = re.sub('https?://\S+|www\.\S+', '', text)
+        text = re.sub('<.*?>+', '', text)
+        text = re.sub('[%s]' % re.escape(string.punctuation), '', text)
+        text = re.sub('\n', '', text)
+        text = re.sub('\w*\d\w*', '', text)
+        text = [word for word in text.split(' ') if word not in stopword]
+        text=" ".join(text)
+        text = [stemmer.stem(word) for word in text.split(' ')]
+        text=" ".join(text)
+        return text
+
+    data["text"] = data["text"].apply(clean)
+    data["label"] = data["label"].map({0: "No Stress", 1: "Stress"})
+    data = data[["text", "subreddit", "label"]]
+
+    from sklearn.feature_extraction.text import CountVectorizer
+    from sklearn.model_selection import train_test_split
+
+    x = np.array(data["text"])
+    y_label = np.array(data["label"])
+    y_subreddit = np.array(data["subreddit"])
+   
+    x = np.array(data["text"])
+    y_label = np.array(data["label"])
+    y_subreddit = np.array(data["subreddit"])
+
+    cv = CountVectorizer()
+    X = cv.fit_transform(x)
+    xtrain, xtest, ytrain_label, ytest_label, ytrain_subreddit, ytest_subreddit = train_test_split(X, y_label, y_subreddit, test_size=0.33, random_state=42)
+
+    from sklearn.tree import DecisionTreeClassifier
+    model = DecisionTreeClassifier()
+    clf = LinearRegression()
+
+    model.fit(xtrain, ytrain_label)
+    clf.fit(xtrain, ytrain_label)
+
+    q1="select latest from lastanswer"
+    cur=con.cursor()
+    cur.execute(q1)
+    res = cur.fetchone()
+    con.commit() 
+    for x in res:
+        user=x
+        print(user)
+        data = cv.transform([user]).toarray()
+        output = model.predict(data)
+        output2 = clf.predict(data)
+        index = np.where(ytest_label == output)[0][0]
+        index1 = np.where(ytest_label == output2)[0][0]
+        label = output[0]
+        label= output[0]
+
+        subreddit = ytest_subreddit[index]
+        subreddit1 = ytest_subreddit[index1]
+        print("hii",subreddit1)
+        data1 = pd.read_csv("C:\\Users\\ASUS\\Downloads\\Dataset (1).csv")
+        #print(data.head())
+        what_they_do = data1.loc[data1['subreddit'] == subreddit, 'What they do']
+        for i in range(1, 10):
+            print(what_they_do.iloc[i])
+
+    payload ={'label': label, 'subreddit': subreddit,'clicked': clicked, 'what_they_do': what_they_do.iloc[5:11].values.tolist()}
+        #print("What they do:", what_they_do)    
+    return payload
+
+        
+
+
+
+

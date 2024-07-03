@@ -1,0 +1,320 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description"
+        content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+    
+    <!-- title -->
+    <title>FruitIQ</title>
+    
+    <!-- favicon -->
+    <link rel="shortcut icon" type="image/png" href="{% static 'assets/img/favicon.png' %}">
+    <!-- google font -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="{% static 'assets/css/all.min.css' %}">
+    <!-- bootstrap -->
+    <link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+    <!-- owl carousel -->
+    <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.css' %}">
+    <!-- magnific popup -->
+    <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+    <!-- animate css -->
+    <link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+    <!-- mean menu css -->
+    <link rel="stylesheet" href="{% static 'assets/css/meanmenu.min.css' %}">
+    <!-- main style -->
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <!-- responsive -->
+    <link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+    <style>
+        .main {
+            font-family: Arial, sans-serif;
+            background-color: grey;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    
+        h1,
+        h2,
+        h3 {
+            color: #333;
+        }
+    
+        .result {
+            background: rgb(238, 230, 212);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            max-width: 1400px;
+            width: 100%;
+            margin-top: 20px;
+            text-align: center;
+        }
+    
+        .form-group {
+            margin-bottom: 15px;
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+    
+        input[type="file"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    
+        button {
+            display: block;
+            width: 100%;
+            background: #007BFF;
+            color: #fff;
+            border: none;
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+    
+        button:hover {
+            background: #0056b3;
+        }
+    
+        .results {
+            margin-top: 20px;
+        }
+    
+        .image-container {
+            align-self: center;
+            /* Adjust alignment */
+        }
+    
+        .image-item {
+            width: 48%;
+            /* Adjust width to fit two images in a row */
+            margin-bottom: 20px;
+            text-align: center;
+            /* Center align text */
+        }
+    
+        .image-item img {
+            max-width: 100%;
+            /* Ensure images fit their container */
+            height: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+    
+        .image-item .image-caption {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    
+        .orange-button {
+            background-color: orange;
+            color: black;
+            padding: 10px 20px;
+            border: bold;
+            border-radius: 5px;
+            text-decoration: none;
+            /* Remove underline style */
+            display: inline-block;
+            margin-top: 20px;
+            font-weight: bold;
+            font-size: 30px;
+            width: 250px;
+            height: 80px;
+        }
+    
+        .orange-button:hover {
+            background-color: #ff8000;
+            /* Darker shade of orange on hover */
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+<div class="main">
+
+    <!-- header -->
+    <div class="top-header-area" id="sticker" class="head">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-sm-12 text-center">
+                    <div class="main-menu-wrap">
+                        <!-- logo -->
+                        <div class="site-logo">
+                            <a href="userhome">
+                                <h1 style="color:orange;">FruitIQ</h1>
+                            </a>
+                        </div>
+                        <!-- logo -->
+    
+                        <!-- menu start -->
+                        <nav class="main-menu">
+                            <ul>
+                                <li>
+                                    <a href="userhome">Home</a>
+                                </li>
+                                <li>
+                                    <a href="aboutus">About us</a>
+                                </li>
+                                <li>
+                                    <a href="count">Detect Apples</a>
+                                </li>
+                                <li>
+                                    <a href="logout">Log out</a>
+                                </li>
+                                <li>
+                                    <a href="contact">Contact us</a>
+                                </li>
+                            </ul>
+                        </nav>
+                        <a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+                        <div class="mobile-menu"></div>
+                        <!-- menu end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end header -->
+    <br><br><br>
+    <div class="result">
+        <h1>Apple Detection Results</h1>
+
+        <p style="font-size: 20px; font-weight: 600;">Prediction Accuracy: {{ score }}</p>
+        
+        <div class="image-container mb-2">
+            <img src="data:image/jpeg;base64,{{ image_data }}" alt="Detected Apples">
+        </div>
+        
+        <p style="font-size: 20px; font-weight: 600;">Number of Apples Detected: {{ num_apples }}</p>
+        <p style="font-size: 20px; font-weight: 600;">Freshness Predictions:</p>
+        <ul>
+            {% for prediction in predictions %}
+                <li>{{ prediction }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    <form action="{% url 'count' %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="Upload Another Image" class="m-4"/>
+    </form>
+</div>
+
+    <!-- footer -->
+    <div class="footer-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-box about-widget">
+                        <h2 class="widget-title">About us</h2>
+                        <p>Welcome to Fruitiq! Our innovative platform is designed to revolutionize the way you manage your
+                            apple
+                            orchards. By
+                            simply uploading an image of your apple tree, Fruitiq uses advanced AI technology to count the
+                            number of
+                            apples and
+                            assess the freshness of each one. </p>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-box get-in-touch">
+                        <h2 class="widget-title">Get in Touch</h2>
+                        <ul>
+                            <li>34/8, East Hukupara, Gifirtok, Sadan.</li>
+                            <li>support@fruitkha.com</li>
+                            <li>+00 111 222 3333</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-box pages">
+                        <h2 class="widget-title">Pages</h2>
+                        <ul>
+                            <li><a href="userhome">Home</a></li>
+                            <li><a href="aboutus">About</a></li>
+                            <li><a href="count">Detect Apples</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-box subscribe">
+                        <h2 class="widget-title">Subscribe</h2>
+                        <p>Subscribe to our mailing list to get the latest updates.</p>
+                        <form action="index.html">
+                            <input type="email" placeholder="Email">
+                            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end footer -->
+    
+    <!-- copyright -->
+    <div class="copyright">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <p>Copyrights &copy; 2024 - <a href="https://imransdesign.com/">iBase Electrosoft</a>, All Rights
+                        Reserved.</p>
+                </div>
+                <div class="col-lg-6 text-right col-md-12">
+                    <div class="social-icons">
+                        <ul>
+                            <li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+                            <li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- end copyright -->
+    
+    <!-- jquery -->
+    <script src="{% static 'assets/js/jquery-1.11.3.min.js' %}"></script>
+    <!-- bootstrap -->
+    <script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+    <!-- count down -->
+    <script src="{% static 'assets/js/jquery.countdown.js' %}"></script>
+    <!-- isotope -->
+    <script src="{% static 'assets/js/jquery.isotope-3.0.6.min.js' %}"></script>
+    <!-- waypoints -->
+    <script src="{% static 'assets/js/waypoints.js' %}"></script>
+    <!-- owl carousel -->
+    <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+    <!-- magnific popup -->
+    <script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
+    <!-- mean menu -->
+    <script src="{% static 'assets/js/jquery.meanmenu.min.js' %}"></script>
+    <!-- sticker js -->
+    <script src="{% static 'assets/js/sticker.js' %}"></script>
+    <!-- main js -->
+    <script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+</html>

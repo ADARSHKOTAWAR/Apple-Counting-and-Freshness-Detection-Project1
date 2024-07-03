@@ -1,0 +1,462 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Responsive Bootstrap4 Shop Template, Created by Imran Hossain from https://imransdesign.com/">
+
+	<!-- title -->
+	<title>FruitIQ</title>
+
+	<!-- favicon -->
+	<link rel="shortcut icon" type="image/png" href="{% static 'assets/img/favicon.png' %}">
+	<!-- google font -->
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+	<!-- fontawesome -->
+	<link rel="stylesheet" href="{% static 'assets/css/all.min.css' %}">
+	<!-- bootstrap -->
+	<link rel="stylesheet" href="{% static 'assets/bootstrap/css/bootstrap.min.css' %}">
+	<!-- owl carousel -->
+	<link rel="stylesheet" href="{% static 'assets/css/owl.carousel.css' %}">
+	<!-- magnific popup -->
+	<link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+	<!-- animate css -->
+	<link rel="stylesheet" href="{% static 'assets/css/animate.css' %}">
+	<!-- mean menu css -->
+	<link rel="stylesheet" href="{% static 'assets/css/meanmenu.min.css' %}">
+	<!-- main style -->
+	<link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+	<!-- responsive -->
+	<link rel="stylesheet" href="{% static 'assets/css/responsive.css' %}">
+
+	<style>
+		.special {
+      border: none;
+			background-color: #F28123;
+      padding: 15px 30px ;
+      cursor: pointer;
+      display: inline-block;
+      font-weight: 700;
+      margin: 5px;
+      -webkit-transition: 0.3s;
+      -o-transition: 0.3s;
+      transition: 0.3s;
+      border-radius: 10px !important;
+      text-transform: uppercase;
+      width: 180px;
+      height: 70px;
+    }
+
+    .special:hover {
+      background-color: #051922;
+      color: #F28123;
+		}
+
+		.model{
+			align-items: center;
+			width: 100%;
+			margin-top: 10px;
+			margin-bottom: 10px;
+      padding: auto;
+		}
+	</style>
+
+</head>
+<body>
+	
+
+	
+	<!-- header -->
+	<div class="top-header-area" id="sticker" class="head">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-sm-12 text-center">
+					<div class="main-menu-wrap">
+						<!-- logo -->
+						<div class="site-logo">
+							<a href="userhome">
+								<h1 style="color:orange;">FruitIQ</h1>
+							</a>
+						</div>
+						<!-- logo -->
+	
+						<!-- menu start -->
+						<nav class="main-menu">
+							<ul>
+								<li>
+									<a href="userhome">Home</a>
+								</li>
+								<li>
+									<a href="aboutus">About us</a>
+								</li>
+								<li>
+									<a href="count">Detect Apples</a>
+								</li>
+								<li>
+									<a href="logout">Log out</a>
+								</li>
+								<li>
+									<a href="contact">Contact us</a>
+								</li>
+							</ul>
+						</nav>
+						<a class="mobile-show search-bar-icon" href="#"><i class="fas fa-search"></i></a>
+						<div class="mobile-menu"></div>
+						<!-- menu end -->
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end header -->
+	
+	<!-- search area -->
+	<div class="search-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<span class="close-btn"><i class="fas fa-window-close"></i></span>
+					<div class="search-bar">
+						<div class="search-bar-tablecell">
+							<h3>Search For:</h3>
+							<input type="text" placeholder="Keywords">
+							<button type="submit">Search<i class="fas fa-search"></i></button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end search area -->
+
+	<div class="homepage-slider">
+		<!-- single home slider -->
+		{% comment %} <div class="single-homepage-slider homepage-bg-1">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-12 col-lg-7 offset-lg-1 offset-xl-0">
+						<div class="hero-text">
+							<div class="hero-text-tablecell">
+								<p class="subtitle"></p>
+								<h1></h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div> {% endcomment %}
+		<!-- single home slider -->
+		<div class="single-homepage-slider homepage-bg-2">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-10 offset-lg-1 text-right">
+						<div class="hero-text">
+							<div class="hero-text-tablecell">
+								<h2 style="color: white">Analyse Freshness</h2>
+								<h1>With the help of <span style="color: #F28123;">Vgg 16</span> Model!</h1>
+								<div class="hero-btns">
+									<form action="{% url 'vgg_quality' %}" method="post">
+										{% csrf_token %}
+										<input type="submit" value="Using Vgg16" />
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- single home slider -->
+		<div class="single-homepage-slider homepage-bg-3">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-10 offset-lg-1 text-right">
+						<div class="hero-text">
+							<div class="hero-text-tablecell">
+								<h2 style="color: white">Analyse Freshness </h2>
+								<h1 >With the help of <span style="color: #F28123;">Resnet 50</span> Model!</h1>
+								<div class="hero-btns">
+									<form action="{% url 'resnet_quality' %}" method="post">
+										{% csrf_token %}
+										<input type="submit" value="Using Resnet50" />
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- single home slider -->
+		<div class="single-homepage-slider homepage-bg-3">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-10 offset-lg-1 text-right">
+						<div class="hero-text">
+							<div class="hero-text-tablecell">
+								<h2 style="color: white;">Analyse Freshness </h2>
+								<h1>With the help of <span style="color: #F28123;">CNN</span> Model!</h1>
+								<div class="hero-btns">
+									<form action="{% url 'cnn_quality' %}" method="post">
+										{% csrf_token %}
+										<input type="submit" value="Using CNN" />
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	<!-- single home slider -->
+	<div class="single-homepage-slider homepage-bg-3">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-10 offset-lg-1 text-right">
+					<div class="hero-text">
+						<div class="hero-text-tablecell">
+							<h2 style="color: white">Compare Accuracy</h2>
+							<h1>For all the <span style="color: #F28123;">three</span> models</h1>
+							<div class="hero-btns">
+								<form action="{% url 'proposed_quality' %}" method="post">
+									{% csrf_token %}
+									<input type="submit" value="Proposed" />
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</div>
+	<!-- end home page slider -->
+	
+	<style>
+	.homepage-bg-1 {
+		background-image: url('{% static 'assets/img/3.jpg' %}');
+		background-size: cover;
+		background-position: center;
+	}
+	
+	.homepage-bg-2 {
+		background-image: url('{% static 'assets/img/3.jpg' %}');
+		background-size: cover;
+		background-position: center;
+	}
+	
+	.homepage-bg-3 {
+		background-image: url('{% static 'assets/img/3.jpg' %}');
+		background-size: cover;
+		background-position: center;
+	}
+	</style>
+
+	<div class="inline-block model">
+		<center>
+    <br><br>
+    <form action="{% url 'vgg_quality' %}" method="post" class="d-inline">
+      {% csrf_token %}
+      <button class="special">Using Vgg16</button>
+  	</form>
+  	
+  	<form action="{% url 'resnet_quality' %}" method="post" class="d-inline">
+    	{% csrf_token %}
+			<button class="special">Using Resnet50</button>
+		</form>
+		
+		<form action="{% url 'cnn_quality' %}" method="post" class="d-inline">
+  	{% csrf_token %}
+  	<button class="special">Using CNN</button>
+		</form>
+		
+		<form action="{% url 'proposed_quality' %}" method="post" class="d-inline">
+		{% csrf_token %}
+		<button class="special">Proposed</button>
+		</form>
+	</center>
+	</div>
+
+	<!-- logo carousel -->
+	<div class="logo-carousel-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="logo-carousel-inner">
+						<div class="single-logo-item">
+							<img src="assets/img/company-logos/1.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="assets/img/company-logos/2.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="assets/img/company-logos/3.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="assets/img/company-logos/4.png" alt="">
+						</div>
+						<div class="single-logo-item">
+							<img src="assets/img/company-logos/5.png" alt="">
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end logo carousel -->
+
+	<!-- product section -->
+	<div class="product-section mt-150 mb-150">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 offset-lg-2 text-center">
+					<div class="section-title">
+						<h3>Different types of <span class="orange-text">Apples</span></h3>
+						<p>Apples are nutritious fruits, rich in fiber and vitamins, available in various flavors and colors. Great
+							for snacking!
+						</p>
+					</div>
+				</div>
+			</div>
+	
+			<div class="row">
+				<div class="col-lg-4 col-md-6 text-center">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href="single-product.html"><img src="assets/img/products/product-img-1.jpg" alt=""></a>
+						</div>
+						<h3>Granny Smith</h3>
+						<p>Originating from Australia, these apples are bright green, with a tart flavor that makes them excellent for
+							pies and
+							sauces.
+						</p>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 text-center">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href="single-product.html"><img src="assets/img/products/product-img-2.jpg" alt=""></a>
+						</div>
+						<h3>Honeycrisp</h3>
+						<p>Developed in Minnesota, Honeycrisp apples are known for their exceptional juiciness and balance of
+							sweetness and
+							acidity, making them a popular choice for fresh eating.</p>
+					</div>
+				</div>
+				<div class="col-lg-4 col-md-6 offset-md-3 offset-lg-0 text-center">
+					<div class="single-product-item">
+						<div class="product-image">
+							<a href="single-product.html"><img src="assets/img/products/product-img-3.jpg" alt=""></a>
+						</div>
+						<h3>Fuji</h3>
+						<p class="product-price"><span>Created in Japan, Fuji apples are a cross between Red Delicious and Ralls Janet
+								varieties. They are very sweet, have
+								dense flesh, and a long shelf life, making them ideal for snacking and storage.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end product section -->
+
+	<!-- footer -->
+	<div class="footer-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box about-widget">
+						<h2 class="widget-title">About us</h2>
+						<p>Welcome to Fruitiq! Our innovative platform is designed to revolutionize the way you manage your apple
+							orchards. By
+							simply uploading an image of your apple tree, Fruitiq uses advanced AI technology to count the number of
+							apples and
+							assess the freshness of each one. </p>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box get-in-touch">
+						<h2 class="widget-title">Get in Touch</h2>
+						<ul>
+							<li>34/8, East Hukupara, Gifirtok, Sadan.</li>
+							<li>support@fruitkha.com</li>
+							<li>+00 111 222 3333</li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box pages">
+						<h2 class="widget-title">Pages</h2>
+						<ul>
+							<li><a href="userhome">Home</a></li>
+							<li><a href="aboutus">About</a></li>
+							<li><a href="count">Detect Apples</a></li>
+							<li><a href="contact.html">Contact</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="col-lg-3 col-md-6">
+					<div class="footer-box subscribe">
+						<h2 class="widget-title">Subscribe</h2>
+						<p>Subscribe to our mailing list to get the latest updates.</p>
+						<form action="index.html">
+							<input type="email" placeholder="Email">
+							<button type="submit"><i class="fas fa-paper-plane"></i></button>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end footer -->
+	
+	<!-- copyright -->
+	<div class="copyright">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-12">
+					<p>Copyrights &copy; 2024 - <a href="https://imransdesign.com/">iBase Electrosoft</a>, All Rights Reserved.</p>
+				</div>
+				<div class="col-lg-6 text-right col-md-12">
+					<div class="social-icons">
+						<ul>
+							<li><a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-twitter"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-instagram"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-linkedin"></i></a></li>
+							<li><a href="#" target="_blank"><i class="fab fa-dribbble"></i></a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- end copyright -->
+	
+	<!-- jquery -->
+	<script src="{% static 'assets/js/jquery-1.11.3.min.js' %}"></script>
+	<!-- bootstrap -->
+	<script src="{% static 'assets/bootstrap/js/bootstrap.min.js' %}"></script>
+	<!-- count down -->
+	<script src="{% static 'assets/js/jquery.countdown.js' %}"></script>
+	<!-- isotope -->
+	<script src="{% static 'assets/js/jquery.isotope-3.0.6.min.js' %}"></script>
+	<!-- waypoints -->
+	<script src="{% static 'assets/js/waypoints.js' %}"></script>
+	<!-- owl carousel -->
+	<script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+	<!-- magnific popup -->
+	<script src="{% static 'assets/js/jquery.magnific-popup.min.js' %}"></script>
+	<!-- mean menu -->
+	<script src="{% static 'assets/js/jquery.meanmenu.min.js' %}"></script>
+	<!-- sticker js -->
+	<script src="{% static 'assets/js/sticker.js' %}"></script>
+	<!-- main js -->
+	<script src="{% static 'assets/js/main.js' %}"></script>
+
+</body>
+</html>
